@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016 Adrian Videnie
+  ~
+  ~ This file is part of Expenses.
+  ~
+  ~ Expenses is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Expenses is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Expenses. If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/nav_main_actions"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_overview"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/title_activity_overview" />
+        <item
+            android:id="@+id/nav_accounts"
+            android:icon="@drawable/ic_account_balance_black_24dp"
+            android:title="@string/title_activity_accounts" />
+        <item
+            android:id="@+id/nav_transactions"
+            android:icon="@drawable/ic_transaction_black_24dp"
+            android:title="@string/title_activity_transactions" />
+        <item
+            android:id="@+id/nav_backup"
+            android:icon="@drawable/ic_cloud_upload_black_24dp"
+            android:title="@string/title_activity_backup" />
+    </group>
+
+    <item android:title="@string/navigation_drawer_manage">
+        <menu>
+            <group android:id="@+id/nav_manage_actions"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_categories"
+                    android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+                    android:title="@string/title_activity_categories" />
+                <item
+                    android:id="@+id/nav_payees"
+                    android:icon="@drawable/ic_payee_black_24dp"
+                    android:title="@string/title_activity_payees" />
+                <item
+                    android:id="@+id/nav_exchange_rates"
+                    android:icon="@drawable/ic_currency_black_24dp"
+                    android:title="@string/title_activity_exchange_rates" />
+            </group>
+        </menu>
+    </item>
+
+    <group android:id="@+id/nav_settings_actions"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/title_activity_settings" />
+    </group>
+
+</menu>

@@ -17,25 +17,20 @@
  * along with Expenses. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ro.expectations.expenses;
+package ro.expectations.expenses.ui.backup;
 
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import ro.expectations.expenses.R;
+import ro.expectations.expenses.ui.drawer.DrawerActivity;
 
-/**
- * A placeholder fragment containing a simple view.
- */
-public class AccountsActivityFragment extends Fragment {
+public class BackupActivity extends DrawerActivity {
 
-    public AccountsActivityFragment() {
+    @Override
+    protected void setMainContentView() {
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_accounts, container, false);
+    protected int getSelfNavDrawerItem() {
+        return R.id.nav_backup;
     }
 }
