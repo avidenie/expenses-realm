@@ -26,6 +26,7 @@
     <string name="title_activity_accounts">Accounts</string>
     <string name="title_activity_transactions">Transactions</string>
     <string name="title_activity_backup">Backup/Restore</string>
+    <string name="title_activity_financisto_import">Import from Financisto</string>
     <string name="title_activity_categories">Categories</string>
     <string name="title_activity_payees">Payees</string>
     <string name="title_activity_exchange_rates">Exchange Rates</string>
@@ -35,5 +36,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_manage">Manage</string>
+
+    <!-- Action bar actions -->
+    <string name="action_financisto_import">Import from Financisto</string>
 
 </resources>

@@ -48,6 +48,10 @@
             android:name=".ui.backup.BackupActivity"
             android:label="@string/title_activity_backup"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.backup.FinancistoImportActivity"
+            android:label="@string/title_activity_financisto_import"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ui.backup.BackupActivity" />
     </application>
 
 </manifest>
