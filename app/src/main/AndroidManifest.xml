@@ -21,6 +21,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ro.expectations.expenses">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -52,6 +54,11 @@
             android:label="@string/title_activity_financisto_import"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".ui.backup.BackupActivity" />
+
+        <service
+            android:name=".restore.FinancistoImportIntentService"
+            android:exported="false" />
+
     </application>
 
 </manifest>

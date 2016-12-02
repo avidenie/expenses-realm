@@ -18,10 +18,14 @@
   ~ along with Expenses. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment"
-    android:name="ro.expectations.expenses.ui.backup.FinancistoImportFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout="@layout/fragment_backup" />
+    tools:context=".ui.backup.FinancistoImportActivity">
+    <item
+        android:id="@+id/action_financisto_import"
+        android:orderInCategory="100"
+        android:title="@string/action_financisto_import"
+        android:icon="@drawable/ic_restore_black_24dp"
+        app:showAsAction="ifRoom" />
+</menu>

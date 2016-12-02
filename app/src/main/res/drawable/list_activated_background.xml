@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2016 Adrian Videnie
+  ~ Copyright © 2016 Adrian Videnie
   ~
   ~ This file is part of Expenses.
   ~
@@ -18,10 +18,7 @@
   ~ along with Expenses. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment"
-    android:name="ro.expectations.expenses.ui.backup.FinancistoImportFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout="@layout/fragment_backup" />
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true" android:drawable="@color/colorGrey300" />
+    <item android:drawable="@android:color/transparent" />
+</selector>

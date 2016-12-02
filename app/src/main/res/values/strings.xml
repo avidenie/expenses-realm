@@ -32,6 +32,9 @@
     <string name="title_activity_exchange_rates">Exchange Rates</string>
     <string name="title_activity_settings">Settings</string>
 
+    <!-- Generic messages -->
+    <string name="success">Success</string>
+
     <!-- Navigation drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -39,5 +42,27 @@
 
     <!-- Action bar actions -->
     <string name="action_financisto_import">Import from Financisto</string>
+
+    <!-- Buttons -->
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_import">Import</string>
+
+    <!-- Empty listings -->
+    <string name="no_financisto_backup_found">Could not find any Financisto backups. Open Financisto, back up your database and try again.</string>
+
+    <!-- Backup/restore and import from Financisto -->
+    <string name="read_storage_rationale_title">Access denied</string>
+    <string name="read_storage_rationale"><![CDATA[You haven\'t allowed <b>%1$s</b> to access your files. Without access, <b>%2$s</b> cannot list backup files or create new backups.]]></string>
+    <string name="read_storage_rationale_financisto_import"><![CDATA[You haven\'t allowed <b>%1$s</b> to access your files. Without access, <b>%2$s</b> cannot list Financisto backup files that can be imported.]]></string>
+    <string name="allow_access">Allow access</string>
+    <string name="financisto_import_confirmation_title">Import Financisto backup file?</string>
+    <string name="financisto_import_confirmation_message">Your existing database will be removed and replaced with the contents of the Financisto backup file.</string>
+    <string name="financisto_import_progress">Importing Financisto backup…</string>
+    <string name="financisto_import_successful">The Financisto backup has been successfully imported.</string>
+
+
+    <!-- Single selection CAB -->
+    <string name="selected_single_selection">1 selected</string>
 
 </resources>
