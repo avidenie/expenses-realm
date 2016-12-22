@@ -17,27 +17,41 @@
  * along with Expenses. If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package ro.expectations.expenses.model;
 
-buildscript {
-    repositories {
-        jcenter()
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
+
+public class Category extends RealmObject {
+
+    @PrimaryKey
+    private int id;
+    @Required
+    private String name;
+    private Category parentCategory;
+
+    public int getId() {
+        return id;
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath "io.realm:realm-gradle-plugin:2.2.1"
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+    public void setId(int id) {
+        this.id = id;
     }
-}
 
-allprojects {
-    repositories {
-        jcenter()
+    public String getName() {
+        return name;
     }
-}
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Category getParentCategory() {
+        return parentCategory;
+    }
+
+    public void setParentCategory(Category parentCategory) {
+        this.parentCategory = parentCategory;
+    }
 }

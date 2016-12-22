@@ -17,27 +17,22 @@
  * along with Expenses. If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package ro.expectations.expenses.model;
 
-buildscript {
-    repositories {
-        jcenter()
+import ro.expectations.expenses.R;
+
+public enum OnlineAccountType {
+
+    PAYPAL(R.string.online_account_paypal, R.drawable.ic_paypal_black_24dp),
+    AMAZON(R.string.online_account_amazon, R.drawable.ic_amazon_black_24dp),
+    GOOGLE_WALLET(R.string.online_account_google_wallet, R.drawable.ic_google_wallet_black_24dp),
+    OTHER(R.string.online_account_other, R.drawable.ic_online_account_black_24dp);
+
+    public final int titleId;
+    public final int iconId;
+
+    OnlineAccountType(int titleId, int iconId) {
+        this.titleId = titleId;
+        this.iconId = iconId;
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath "io.realm:realm-gradle-plugin:2.2.1"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-allprojects {
-    repositories {
-        jcenter()
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }

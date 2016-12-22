@@ -22,6 +22,7 @@ package ro.expectations.expenses.ui.backup;
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -59,6 +60,7 @@ import ro.expectations.expenses.R;
 import ro.expectations.expenses.ui.dialog.AlertDialogFragment;
 import ro.expectations.expenses.ui.dialog.ConfirmationDialogFragment;
 import ro.expectations.expenses.ui.dialog.ProgressDialogFragment;
+import ro.expectations.expenses.ui.overview.OverviewActivity;
 import ro.expectations.expenses.ui.recyclerview.ItemClickHelper;
 import ro.expectations.expenses.restore.AbstractRestoreIntentService;
 import ro.expectations.expenses.restore.FinancistoImportIntentService;
@@ -66,7 +68,7 @@ import ro.expectations.expenses.ui.utils.DrawableUtils;
 import ro.expectations.expenses.utils.FileUtils;
 
 public class FinancistoImportFragment extends Fragment
-        implements ConfirmationDialogFragment.Listener {
+        implements ConfirmationDialogFragment.Listener, DialogInterface.OnClickListener {
 
     private static final String TAG = FinancistoImportFragment.class.getSimpleName();
 
@@ -322,6 +324,12 @@ public class FinancistoImportFragment extends Fragment
     @Override
     public void onDenied(int targetRequestCode) {
         // nothing to do
+    }
+
+    @Override
+    public void onClick(DialogInterface dialogInterface, int i) {
+        Intent intent = new Intent(getActivity(), OverviewActivity.class);
+        startActivity(intent);
     }
 
     private void setupRecyclerView() {

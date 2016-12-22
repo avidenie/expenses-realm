@@ -30,13 +30,16 @@ import java.io.InputStream;
 import java.io.PushbackInputStream;
 import java.util.zip.GZIPInputStream;
 
-import ro.expectations.expenses.data.IntegrityFixHelper;
+import io.realm.Realm;
+import ro.expectations.expenses.data.DataIntegrityFixer;
 
 public abstract class AbstractRestoreIntentService extends IntentService {
 
     public static final String ARG_FILE_URI = "arg_file_uri";
 
     protected static final String TAG = AbstractRestoreIntentService.class.getSimpleName();
+
+    protected Realm realm;
 
     public AbstractRestoreIntentService() {
         super("RestoreIntentService");
@@ -45,27 +48,24 @@ public abstract class AbstractRestoreIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        Log.e(TAG, "onHandleIntent");
+        realm = Realm.getDefaultInstance();
 
         String filePath = intent.getStringExtra(AbstractRestoreIntentService.ARG_FILE_URI);
         File file = new File(filePath);
         try {
             FileInputStream inputStream = new FileInputStream(file);
             InputStream decompressedStream = decompressStream(inputStream);
-            parse(decompressedStream);
+            emptyDatabase();
+            process(decompressedStream);
         } catch(IOException e) {
+            realm.close();
             notifyFailure(e);
             return;
         }
 
-        try {
-            emptyDatabase();
-            populateDatabase();
-            new IntegrityFixHelper(this).fix();
-        } catch(RuntimeException e) {
-            notifyFailure(e);
-            return;
-        }
+        realm.close();
+
+        new DataIntegrityFixer(this).fix();
 
         notifySuccess();
     }
@@ -87,15 +87,14 @@ public abstract class AbstractRestoreIntentService extends IntentService {
 
     protected void emptyDatabase() {
 
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.commitTransaction();
+
         Log.i(TAG, "Finished emptying existing database");
     }
 
-    protected void populateDatabase() {
-
-        Log.i(TAG, "Finished populating the database with new entries");
-    }
-
-    protected abstract void parse(InputStream input) throws IOException;
+    protected abstract void process(InputStream input) throws IOException;
 
     protected abstract void notifySuccess();
 

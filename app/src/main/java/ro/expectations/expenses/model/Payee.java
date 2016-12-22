@@ -17,23 +17,41 @@
  * along with Expenses. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ro.expectations.expenses.data;
+package ro.expectations.expenses.model;
 
-import android.content.Context;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
-/**
- * Helper to check the database for integrity and fix any issues.
- */
-public class IntegrityFixHelper {
+public class Payee extends RealmObject {
 
-    private static final String TAG = IntegrityFixHelper.class.getSimpleName();
+    @PrimaryKey
+    private int id;
+    @Required
+    private String name;
+    private Category lastCategory;
 
-    private final Context mContext;
-
-    public IntegrityFixHelper(Context context) {
-        mContext = context;
+    public int getId() {
+        return id;
     }
 
-    public void fix() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Category getLastCategory() {
+        return lastCategory;
+    }
+
+    public void setLastCategory(Category lastCategory) {
+        this.lastCategory = lastCategory;
     }
 }
