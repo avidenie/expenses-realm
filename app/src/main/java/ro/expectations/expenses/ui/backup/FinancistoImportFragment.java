@@ -137,7 +137,7 @@ public class FinancistoImportFragment extends Fragment
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             mActionMode = null;
-            if (mAdapter.isActivated()) {
+            if (mAdapter.hasItemSelected()) {
                 mAdapter.clearSelection();
             }
         }
@@ -201,7 +201,7 @@ public class FinancistoImportFragment extends Fragment
                     if (mActionMode != null) {
                         mActionMode.finish();
                     }
-                } else if (mAdapter.isActivated()) {
+                } else if (mAdapter.hasItemSelected()) {
                     mAdapter.setItemSelected(position, true);
                     if (mActionMode == null) {
                         mActionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
@@ -254,7 +254,7 @@ public class FinancistoImportFragment extends Fragment
         if (savedInstanceState != null) {
             mAdapter.onRestoreInstanceState(savedInstanceState);
             mSelectedFile = (File) savedInstanceState.getSerializable(KEY_SELECTED_FILE);
-            if (mAdapter.isActivated() && mActionMode == null) {
+            if (mAdapter.hasItemSelected() && mActionMode == null) {
                 mActionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
             }
         }

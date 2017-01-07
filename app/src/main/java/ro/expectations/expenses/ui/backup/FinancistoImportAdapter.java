@@ -20,6 +20,7 @@
 package ro.expectations.expenses.ui.backup;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
@@ -30,20 +31,24 @@ import android.widget.TextView;
 import java.io.File;
 
 import ro.expectations.expenses.R;
-import ro.expectations.expenses.ui.recyclerview.SingleSelectionAdapter;
+import ro.expectations.expenses.ui.recyclerview.SingleSelection;
+import ro.expectations.expenses.ui.recyclerview.SingleSelectionHelper;
 import ro.expectations.expenses.ui.utils.ListUtils;
 
-public class FinancistoImportAdapter extends SingleSelectionAdapter<FinancistoImportAdapter.ViewHolder> {
+class FinancistoImportAdapter extends RecyclerView.Adapter<FinancistoImportAdapter.ViewHolder>
+        implements SingleSelection {
 
-    final private Context mContext;
+    private final SingleSelection mSingleSelectionHelper;
+    private final Context mContext;
     private File[] mFiles;
 
-    public FinancistoImportAdapter(Context context, File[] files) {
+    FinancistoImportAdapter(Context context, File[] files) {
+        mSingleSelectionHelper = new SingleSelectionHelper(this);
         mContext = context;
         mFiles = files;
     }
 
-    public void setFiles(File[] files) {
+    void setFiles(File[] files) {
         mFiles = files;
         notifyDataSetChanged();
     }
@@ -76,12 +81,47 @@ public class FinancistoImportAdapter extends SingleSelectionAdapter<FinancistoIm
         return mFiles[position];
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public boolean hasItemSelected() {
+        return mSingleSelectionHelper.hasItemSelected();
+    }
+
+    @Override
+    public int getSelectedItemPosition() {
+        return mSingleSelectionHelper.getSelectedItemPosition();
+    }
+
+    @Override
+    public boolean isItemSelected(int position) {
+        return mSingleSelectionHelper.isItemSelected(position);
+    }
+
+    @Override
+    public void setItemSelected(int position, boolean selected) {
+        mSingleSelectionHelper.setItemSelected(position, selected);
+    }
+
+    @Override
+    public void clearSelection() {
+        mSingleSelectionHelper.clearSelection();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle state) {
+        mSingleSelectionHelper.onSaveInstanceState(state);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle state) {
+        mSingleSelectionHelper.onRestoreInstanceState(state);
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mBackupFilename;
         private final TextView mBackupFilesize;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mBackupFilename = (TextView) view.findViewById(R.id.backup_filename);
             mBackupFilesize = (TextView) view.findViewById(R.id.backup_filesize);

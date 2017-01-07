@@ -22,45 +22,35 @@ package ro.expectations.expenses.ui.recyclerview;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
-/**
- * A {@link android.support.v7.widget.RecyclerView.Adapter} that allows selecting a single
- * item from the list.
- */
-public abstract class SingleSelectionAdapter<VH extends RecyclerView.ViewHolder>
-        extends RecyclerView.Adapter<VH> {
+public final class SingleSelectionHelper implements SingleSelection {
 
-    public static final int INVALID_POSITION = -1;
-
-    private static final String STATE_KEY_SELECTED_POSITION = "SingleSelectionSelectedPosition";
+    private static final String STATE_KEY_SELECTED_POSITION = "SingleSelectionHelper::SelectedPosition";
 
     private int mSelectedItemPosition = INVALID_POSITION;
 
-    /**
-     * Return the selected state of the specified position.
-     *
-     * @param position The item whose selected state to return
-     * @return The item's selected state
-     */
+    private RecyclerView.Adapter mAdapter;
+
+    public SingleSelectionHelper() {
+    }
+
+    public SingleSelectionHelper(RecyclerView.Adapter adapter) {
+        this.mAdapter = adapter;
+    }
+
+    public RecyclerView.Adapter getAdapter() {
+        return mAdapter;
+    }
+
+    public void setAdapter(RecyclerView.Adapter mAdapter) {
+        this.mAdapter = mAdapter;
+    }
+
+    @Override
     public boolean isItemSelected(int position) {
         return position == mSelectedItemPosition;
     }
 
-    /**
-     * Return the position of the currently selected item.
-     *
-     * @return The position of the currently selected item or {@link #INVALID_POSITION} if nothing is
-     * selected
-     */
-    public int getSelectedItemPosition() {
-        return mSelectedItemPosition;
-    }
-
-    /**
-     * Set the selected state of the specified position.
-     *
-     * @param position The item whose selected state is to be set
-     * @param selected The new selected state for the item
-     */
+    @Override
     public void setItemSelected(int position, boolean selected) {
 
         if (selected) {
@@ -69,50 +59,47 @@ public abstract class SingleSelectionAdapter<VH extends RecyclerView.ViewHolder>
                 clearSelection();
             }
             mSelectedItemPosition = position;
-            notifyItemChanged(position);
+            if (mAdapter != null) {
+                mAdapter.notifyItemChanged(position);
+            }
         } else {
             // When asked to deselect, only do it if the item was previously selected
             if (mSelectedItemPosition == position) {
                 mSelectedItemPosition = INVALID_POSITION;
-                notifyItemChanged(position);
+                if (mAdapter != null) {
+                    mAdapter.notifyItemChanged(position);
+                }
             }
         }
     }
 
-    /**
-     * Clear current selected item.
-     */
+    @Override
+    public boolean hasItemSelected() {
+        return mSelectedItemPosition != INVALID_POSITION;
+    }
+
+    @Override
+    public int getSelectedItemPosition() {
+        return mSelectedItemPosition;
+    }
+
+    @Override
     public void clearSelection() {
         int oldPosition = mSelectedItemPosition;
         if (oldPosition != INVALID_POSITION) {
             mSelectedItemPosition = INVALID_POSITION;
-            notifyItemChanged(oldPosition);
+            if (mAdapter != null) {
+                mAdapter.notifyItemChanged(oldPosition);
+            }
         }
     }
 
-    /**
-     * Check if the adapter has an item selected or not.
-     *
-     * @return Returns true if the adapter has at least 1 item selected, false otherwise
-     */
-    public boolean isActivated() {
-        return mSelectedItemPosition != INVALID_POSITION;
-    }
-
-    /**
-     * Called to save the the state of the adapter.
-     *
-     * @param state Bundle in which to set the saved state.
-     */
+    @Override
     public void onSaveInstanceState(Bundle state) {
         state.putInt(STATE_KEY_SELECTED_POSITION, mSelectedItemPosition);
     }
 
-    /**
-     * Called to restore the state of the adapter from a previously saved bundle.
-     *
-     * @param state The data most recently supplied in {@link #onSaveInstanceState}
-     */
+    @Override
     public void onRestoreInstanceState(Bundle state) {
         mSelectedItemPosition = state.getInt(STATE_KEY_SELECTED_POSITION, INVALID_POSITION);
     }
