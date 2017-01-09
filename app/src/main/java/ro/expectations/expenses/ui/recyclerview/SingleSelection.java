@@ -32,7 +32,7 @@ public interface SingleSelection {
     /**
      * Check if the adapter has an item selected or not.
      *
-     * @return Returns true if the adapter has at least 1 item selected, false otherwise
+     * @return Returns true if the adapter has an item selected, false otherwise
      */
     boolean hasItemSelected();
 
