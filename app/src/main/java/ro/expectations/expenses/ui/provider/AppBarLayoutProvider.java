@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Adrian Videnie
+ * Copyright (c) 2017 Adrian Videnie
  *
  * This file is part of Expenses.
  *
@@ -17,25 +17,10 @@
  * along with Expenses. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ro.expectations.expenses.ui.transactions;
+package ro.expectations.expenses.ui.provider;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 
-import ro.expectations.expenses.R;
-import ro.expectations.expenses.ui.drawer.DrawerActivity;
-
-public class TransactionsActivity extends DrawerActivity {
-
-    public static final String ARG_ACCOUNT_ID = "account_id";
-
-    @Override
-    protected void setMainContentView(@Nullable Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected int getSelfNavDrawerItem() {
-        return R.id.nav_transactions;
-    }
+public interface AppBarLayoutProvider {
+    AppBarLayout getAppBarLayout();
 }

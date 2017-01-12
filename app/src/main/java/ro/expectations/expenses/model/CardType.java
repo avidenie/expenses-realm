@@ -36,11 +36,29 @@ public enum CardType {
     EPS(R.string.card_issuer_eps, R.drawable.ic_card_eps_black_24dp),
     OTHER(R.string.card_issuer_other, R.drawable.ic_credit_card_black_24dp);
 
+    private static final CardType[] copyOfValues = values();
+
     public final int titleId;
     public final int iconId;
 
     CardType(int titleId, int iconId) {
         this.titleId = titleId;
         this.iconId = iconId;
+    }
+
+
+    public static CardType fromString(String value, CardType defaultCardType) {
+        if (value != null) {
+            for (CardType val : copyOfValues) {
+                if (value.equalsIgnoreCase(val.toString())) {
+                    return val;
+                }
+            }
+        }
+        return defaultCardType;
+    }
+
+    public static CardType fromString(String value) {
+        return fromString(value, OTHER);
     }
 }

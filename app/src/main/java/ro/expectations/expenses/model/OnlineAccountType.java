@@ -28,11 +28,28 @@ public enum OnlineAccountType {
     GOOGLE_WALLET(R.string.online_account_google_wallet, R.drawable.ic_google_wallet_black_24dp),
     OTHER(R.string.online_account_other, R.drawable.ic_online_account_black_24dp);
 
+    private static final OnlineAccountType[] copyOfValues = values();
+
     public final int titleId;
     public final int iconId;
 
     OnlineAccountType(int titleId, int iconId) {
         this.titleId = titleId;
         this.iconId = iconId;
+    }
+
+    public static OnlineAccountType fromString(String value, OnlineAccountType defaultOnlineAccountType) {
+        if (value != null) {
+            for (OnlineAccountType val : copyOfValues) {
+                if (value.equalsIgnoreCase(val.toString())) {
+                    return val;
+                }
+            }
+        }
+        return defaultOnlineAccountType;
+    }
+
+    public static OnlineAccountType fromString(String value) {
+        return fromString(value, OTHER);
     }
 }

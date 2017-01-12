@@ -19,13 +19,16 @@
 
 package ro.expectations.expenses.ui.overview;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
 import ro.expectations.expenses.R;
 import ro.expectations.expenses.ui.drawer.DrawerActivity;
 
 public class OverviewActivity extends DrawerActivity {
 
     @Override
-    protected void setMainContentView() {
+    protected void setMainContentView(@Nullable Bundle savedInstanceState) {
 
     }
 

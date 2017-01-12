@@ -44,6 +44,10 @@
             android:label="@string/title_activity_accounts"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".ui.accounts.ManageAccountActivity"
+            android:label="@string/title_activity_accounts"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ui.transactions.TransactionsActivity"
             android:label="@string/title_activity_transactions"
             android:theme="@style/AppTheme.NoActionBar" />

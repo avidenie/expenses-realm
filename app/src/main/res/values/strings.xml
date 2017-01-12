@@ -80,6 +80,7 @@
 
     <!-- Empty listings -->
     <string name="no_financisto_backup_found">Could not find any Financisto backups. Open Financisto, back up your database and try again.</string>
+    <string name="no_account_defined">You haven\'t created an account yet.</string>
 
     <!-- Backup/restore and import from Financisto -->
     <string name="read_storage_rationale_title">Access denied</string>
@@ -94,5 +95,13 @@
 
     <!-- Single selection CAB -->
     <string name="selected_single_selection">1 selected</string>
+
+    <!-- Manage accounts -->
+    <string name="action_edit_account">Edit Account</string>
+    <string name="action_close_account">Close Account</string>
+    <plurals name="selected_accounts">
+        <item quantity="one">1 selected</item>
+        <item quantity="other">%d selected</item>
+    </plurals>
 
 </resources>

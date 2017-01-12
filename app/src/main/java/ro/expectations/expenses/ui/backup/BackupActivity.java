@@ -21,6 +21,8 @@ package ro.expectations.expenses.ui.backup;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,9 +34,9 @@ import ro.expectations.expenses.ui.drawer.DrawerActivity;
 public class BackupActivity extends DrawerActivity {
 
     @Override
-    protected void setMainContentView() {
+    protected void setMainContentView(@Nullable Bundle savedInstanceState) {
         ViewStub mainContent = (ViewStub) findViewById(R.id.main_content_stub);
-        mainContent.setLayoutResource(R.layout.content_accounts);
+        mainContent.setLayoutResource(R.layout.content_fragment);
         mainContent.setVisibility(View.VISIBLE);
     }
 

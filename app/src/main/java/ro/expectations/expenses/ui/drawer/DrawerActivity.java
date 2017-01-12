@@ -63,7 +63,7 @@ public abstract class DrawerActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(getSelfNavDrawerItem());
 
-        setMainContentView();
+        setMainContentView(savedInstanceState);
     }
 
     @Override
@@ -137,7 +137,7 @@ public abstract class DrawerActivity extends AppCompatActivity
      *
      * Subclasses of DrawerActivity implement this to load main content layout on demand.
      */
-    protected abstract void setMainContentView();
+    protected abstract void setMainContentView(@Nullable Bundle savedInstanceState);
 
     /**
      * Returns the navigation drawer item that corresponds to this Activity.

@@ -28,46 +28,42 @@ import android.util.SparseBooleanArray;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A {@link android.support.v7.widget.RecyclerView.Adapter} that allows selecting multiple
- * items from the list.
- */
-public abstract class MultipleSelectionAdapter<VH extends RecyclerView.ViewHolder>
-        extends RecyclerView.Adapter<VH> {
+public class MultipleSelectionHelper implements MultipleSelection {
 
-    private static final String STATE_KEY_SELECTED_ITEMS = "MultipleSelectionSelectedItems";
-    private static final String STATE_KEY_SELECTED_COUNT = "MultipleSelectionSelectedCount";
+    private static final String STATE_KEY_SELECTED_ITEMS = "MultipleSelectionHelper::SelectedItems";
+    private static final String STATE_KEY_SELECTED_COUNT = "MultipleSelectionHelper::SelectedCount";
 
     private SelectedItems mSelectedItems = new SelectedItems();
     private int mSelectedItemsCount;
 
-    /**
-     * Return the number of items currently selected.
-     *
-     * To determine the specific items that are currently selected, use
-     * the {@link #getSelectedItemPositions} method.
-     *
-     * @return The number of items currently selected
-     */
+    private RecyclerView.Adapter mAdapter;
+
+    public MultipleSelectionHelper() {
+    }
+
+    public MultipleSelectionHelper(RecyclerView.Adapter mAdapter) {
+        this.mAdapter = mAdapter;
+    }
+
+    public RecyclerView.Adapter getAdapter() {
+        return mAdapter;
+    }
+
+    public void setAdapter(RecyclerView.Adapter adapter) {
+        this.mAdapter = adapter;
+    }
+
+    @Override
+    public boolean hasItemSelected() {
+        return mSelectedItemsCount > 0;
+    }
+
+    @Override
     public int getSelectedItemCount() {
         return mSelectedItemsCount;
     }
 
-    /**
-     * Return the selected state of the specified position.
-     *
-     * @param position The item whose selected state to return
-     * @return The item's selected state
-     */
-    public boolean isItemSelected(int position) {
-        return mSelectedItems.get(position);
-    }
-
-    /**
-     * Return the set of selected item positions in the list.
-     *
-     * @return All selected item positions in the list
-     */
+    @Override
     public List<Integer> getSelectedItemPositions() {
         List<Integer> items = new ArrayList<>();
         for (int i = 0; i < mSelectedItems.size(); ++i) {
@@ -78,12 +74,12 @@ public abstract class MultipleSelectionAdapter<VH extends RecyclerView.ViewHolde
         return items;
     }
 
-    /**
-     * Set the selected state of the specified position.
-     *
-     * @param position The item whose selected state is to be set
-     * @param selected The new selected state for the item
-     */
+    @Override
+    public boolean isItemSelected(int position) {
+        return mSelectedItems.get(position);
+    }
+
+    @Override
     public void setItemSelected(int position, boolean selected) {
         boolean oldValue = mSelectedItems.get(position);
 
@@ -99,46 +95,31 @@ public abstract class MultipleSelectionAdapter<VH extends RecyclerView.ViewHolde
             } else {
                 mSelectedItemsCount--;
             }
-            notifyItemChanged(position);
+            if (mAdapter != null) {
+                mAdapter.notifyItemChanged(position);
+            }
         }
     }
 
-    /**
-     * Clear currently selected items.
-     */
+    @Override
     public void clearSelection() {
         List<Integer> selection = getSelectedItemPositions();
         mSelectedItems.clear();
         mSelectedItemsCount = 0;
         for (Integer i: selection) {
-            notifyItemChanged(i);
+            if (mAdapter != null) {
+                mAdapter.notifyItemChanged(i);
+            }
         }
     }
 
-    /**
-     * Check if the adapter has at least 1 item selected or not.
-     *
-     * @return Returns true if the adapter has at least 1 item selected, false otherwise
-     */
-    public boolean isActivated() {
-        return mSelectedItemsCount > 0;
-    }
-
-    /**
-     * Called to save the the state of the adapter.
-     *
-     * @param state Bundle in which to set the saved state.
-     */
+    @Override
     public void onSaveInstanceState(Bundle state) {
         state.putParcelable(STATE_KEY_SELECTED_ITEMS, mSelectedItems);
         state.putInt(STATE_KEY_SELECTED_COUNT, mSelectedItemsCount);
     }
 
-    /**
-     * Called to restore the state of the adapter from a previously saved bundle.
-     *
-     * @param state The data most recently supplied in {@link #onSaveInstanceState}
-     */
+    @Override
     public void onRestoreInstanceState(Bundle state) {
         mSelectedItems = state.getParcelable(STATE_KEY_SELECTED_ITEMS);
         if (mSelectedItems == null) {

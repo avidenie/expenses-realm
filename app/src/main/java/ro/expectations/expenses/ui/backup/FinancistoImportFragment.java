@@ -26,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -57,14 +58,13 @@ import android.widget.TextView;
 import java.io.File;
 
 import ro.expectations.expenses.R;
+import ro.expectations.expenses.restore.AbstractRestoreIntentService;
+import ro.expectations.expenses.restore.FinancistoImportIntentService;
 import ro.expectations.expenses.ui.dialog.AlertDialogFragment;
 import ro.expectations.expenses.ui.dialog.ConfirmationDialogFragment;
 import ro.expectations.expenses.ui.dialog.ProgressDialogFragment;
 import ro.expectations.expenses.ui.overview.OverviewActivity;
 import ro.expectations.expenses.ui.recyclerview.ItemClickHelper;
-import ro.expectations.expenses.restore.AbstractRestoreIntentService;
-import ro.expectations.expenses.restore.FinancistoImportIntentService;
-import ro.expectations.expenses.ui.utils.DrawableUtils;
 import ro.expectations.expenses.utils.FileUtils;
 
 public class FinancistoImportFragment extends Fragment
@@ -97,8 +97,10 @@ public class FinancistoImportFragment extends Fragment
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.cab_import_financisto, menu);
 
-            MenuItem actionFinancistoImport = menu.findItem(R.id.action_financisto_import);
-            actionFinancistoImport.setIcon(DrawableUtils.tint(getContext(), actionFinancistoImport.getIcon(), R.color.colorWhite));
+            menu.findItem(R.id.action_financisto_import)
+                    .getIcon()
+                    .setColorFilter(ContextCompat.getColor(getContext(), R.color.colorWhite),
+                            PorterDuff.Mode.SRC_IN);
 
             return true;
         }
