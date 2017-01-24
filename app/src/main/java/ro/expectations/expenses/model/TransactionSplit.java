@@ -24,6 +24,12 @@ import io.realm.annotations.PrimaryKey;
 
 public class TransactionSplit extends RealmObject {
 
+    public static final String ID = "id";
+    public static final String AMOUNT = "amount";
+    public static final String CATEGORY = "category";
+    public static final String PROJECT = "project";
+    public static final String NOTE = "note";
+
     @PrimaryKey
     private int id;
     private long amount;

@@ -25,6 +25,10 @@ import io.realm.annotations.Required;
 
 public class Payee extends RealmObject {
 
+    public static final String ID = "id";
+    public static final String NAME = "name";
+    public static final String LAST_CATEGORY = "lastCategory";
+
     @PrimaryKey
     private int id;
     @Required

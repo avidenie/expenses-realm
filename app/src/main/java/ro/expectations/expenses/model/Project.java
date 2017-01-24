@@ -27,6 +27,11 @@ import io.realm.annotations.Required;
 
 public class Project extends RealmObject {
 
+    public static final String ID = "id";
+    public static final String TITLE = "title";
+    public static final String IS_ACTIVE = "isActive";
+    public static final String UPDATED_AT = "updated_at";
+
     @PrimaryKey
     private int id;
     @Required

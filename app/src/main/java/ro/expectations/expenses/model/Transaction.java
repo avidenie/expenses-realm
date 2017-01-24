@@ -27,6 +27,24 @@ import io.realm.annotations.PrimaryKey;
 
 public class Transaction extends RealmObject {
 
+    public static final String ID = "id";
+    public static final String FROM_ACCOUNT = "fromAccount";
+    public static final String FROM_AMOUNT = "fromAmount";
+    public static final String FROM_RUNNING_BALANCE = "fromRunningBalance";
+    public static final String TO_ACCOUNT = "toAccount";
+    public static final String TO_AMOUNT = "toAmount";
+    public static final String TO_RUNNING_BALANCE = "toRunningBalance";
+    public static final String PAYEE = "payee";
+    public static final String CATEGORY = "category";
+    public static final String PROJECT = "project";
+    public static final String NOTE = "note";
+    public static final String ORIGINAL_CURRENCY = "originalCurrency";
+    public static final String ORIGINAL_AMOUNT = "originalAmount";
+    public static final String OCCURRED_AT = "occurredAt";
+    public static final String CLEARED_AT = "clearedAt";
+    public static final String UPDATED_AT = "updatedAt";
+    public static final String SPLITS = "splits";
+
     @PrimaryKey
     private int id;
 

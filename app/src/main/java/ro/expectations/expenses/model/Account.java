@@ -28,6 +28,20 @@ import io.realm.annotations.Required;
 
 public class Account extends RealmObject {
 
+    public static final String ID = "id";
+    public static final String TITLE = "title";
+    public static final String CURRENCY = "currency";
+    public static final String BALANCE = "balance";
+    public static final String TYPE = "type";
+    public static final String CARD_TYPE = "cardType";
+    public static final String ONLINE_ACCOUNT_TYPE = "onlineAccountType";
+    public static final String IS_ACTIVE = "isActive";
+    public static final String INCLUDE_INTO_TOTALS = "includeIntoTotals";
+    public static final String SORT_ORDER = "sortOrder";
+    public static final String NOTE = "note";
+    public static final String CREATED_AT = "createdAt";
+    public static final String LAST_TRANSACTION_AT = "lastTransactionAt";
+
     @PrimaryKey
     private int id;
     @Required

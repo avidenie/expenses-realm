@@ -155,8 +155,8 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
     private void processCategoryEntry(Map<String, String> values) {
 
         Bundle categoryValues = new Bundle();
-        categoryValues.putInt("id", Integer.parseInt(values.get("_id")));
-        categoryValues.putString("name", values.get("title"));
+        categoryValues.putInt(Category.ID, Integer.parseInt(values.get("_id")));
+        categoryValues.putString(Category.NAME, values.get("title"));
         categoryValues.putInt("left", Integer.valueOf(values.get("left")));
         categoryValues.putInt("right", Integer.valueOf(values.get("right")));
 
@@ -214,22 +214,22 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
         }
 
         Bundle accountValues = new Bundle();
-        accountValues.putInt("id", Integer.parseInt(values.get("_id")));
-        accountValues.putString("title", values.get("title"));
-        accountValues.putString("currency", values.get("currency_id"));
-        accountValues.putLong("balance", Long.parseLong(values.get("total_amount")));
-        accountValues.putString("type", type.name());
+        accountValues.putInt(Account.ID, Integer.parseInt(values.get("_id")));
+        accountValues.putString(Account.TITLE, values.get("title"));
+        accountValues.putString(Account.CURRENCY, values.get("currency_id"));
+        accountValues.putLong(Account.BALANCE, Long.parseLong(values.get("total_amount")));
+        accountValues.putString(Account.TYPE, type.name());
         if (cardType != null) {
-            accountValues.putString("card_type", cardType.name());
+            accountValues.putString(Account.CARD_TYPE, cardType.name());
         }
         if (onlineAccountType != null) {
-            accountValues.putString("online_account_type", onlineAccountType.name());
+            accountValues.putString(Account.ONLINE_ACCOUNT_TYPE, onlineAccountType.name());
         }
-        accountValues.putBoolean("is_active", Integer.parseInt(values.get("is_active")) == 1);
-        accountValues.putBoolean("include_into_totals", Integer.parseInt(values.get("is_include_into_totals")) == 1);
-        accountValues.putInt("sort_order", Integer.parseInt(values.get("sort_order")));
-        accountValues.putString("note", values.get("note"));
-        accountValues.putLong("created_at", Long.parseLong(values.get("creation_date")));
+        accountValues.putBoolean(Account.IS_ACTIVE, Integer.parseInt(values.get("is_active")) == 1);
+        accountValues.putBoolean(Account.INCLUDE_INTO_TOTALS, Integer.parseInt(values.get("is_include_into_totals")) == 1);
+        accountValues.putInt(Account.SORT_ORDER, Integer.parseInt(values.get("sort_order")));
+        accountValues.putString(Account.NOTE, values.get("note"));
+        accountValues.putLong(Account.CREATED_AT, Long.parseLong(values.get("creation_date")));
 
         mAccounts.add(accountValues);
     }
@@ -280,8 +280,8 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
     private void processPayeeEntry(Map<String, String> values) {
 
         Bundle payeeValues = new Bundle();
-        payeeValues.putInt("id", Integer.parseInt(values.get("_id")));
-        payeeValues.putString("name", values.get("title"));
+        payeeValues.putInt(Payee.ID, Integer.parseInt(values.get("_id")));
+        payeeValues.putString(Payee.NAME, values.get("title"));
         payeeValues.putInt("last_category_id", Integer.parseInt(values.get("last_category_id")));
 
         mPayees.add(payeeValues);
@@ -292,10 +292,10 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
         Bundle projectValues = new Bundle();
         int projectId = Integer.parseInt(values.get("_id"));
         if (projectId > 0) {
-            projectValues.putInt("id", projectId);
-            projectValues.putString("title", values.get("title"));
-            projectValues.putBoolean("is_active", Integer.parseInt(values.get("is_active")) == 1);
-            projectValues.putLong("updated_at", Long.parseLong(values.get("updated_on")));
+            projectValues.putInt(Project.ID, projectId);
+            projectValues.putString(Project.TITLE, values.get("title"));
+            projectValues.putBoolean(Project.IS_ACTIVE, Integer.parseInt(values.get("is_active")) == 1);
+            projectValues.putLong(Project.UPDATED_AT, Long.parseLong(values.get("updated_on")));
 
             mProjects.add(projectValues);
         }
@@ -323,8 +323,8 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
             } else {
 
                 Bundle splitBundle = new Bundle();
-                splitBundle.putInt("id", id);
-                splitBundle.putLong("amount", 0 - fromAmount);
+                splitBundle.putInt(TransactionSplit.ID, id);
+                splitBundle.putLong(TransactionSplit.AMOUNT, 0 - fromAmount);
 
                 if (values.containsKey("category_id")) {
                     int categoryId = Integer.parseInt(values.get("category_id"));
@@ -340,7 +340,7 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
                     }
                 }
 
-                splitBundle.putString("note", values.get("note"));
+                splitBundle.putString(TransactionSplit.NOTE, values.get("note"));
 
                 int key = Integer.parseInt(parentId);
                 List<Bundle> transactionSplits = mTransactionSplits.get(key, null);
@@ -353,20 +353,20 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
 
         } else {
 
-            transactionBundle.putInt("id", id);
+            transactionBundle.putInt(Transaction.ID, id);
 
             if (toAccountId > 0) {
                 transactionBundle.putInt("from_account_id", fromAccountId);
-                transactionBundle.putLong("from_amount", 0 - fromAmount);
+                transactionBundle.putLong(Transaction.FROM_AMOUNT, 0 - fromAmount);
                 transactionBundle.putInt("to_account_id", toAccountId);
-                transactionBundle.putLong("to_amount", toAmount);
+                transactionBundle.putLong(Transaction.TO_AMOUNT, toAmount);
             } else {
                 if (fromAmount > 0) {
                     transactionBundle.putInt("to_account_id", fromAccountId);
-                    transactionBundle.putLong("to_amount", fromAmount);
+                    transactionBundle.putLong(Transaction.TO_AMOUNT, fromAmount);
                 } else {
                     transactionBundle.putInt("from_account_id", fromAccountId);
-                    transactionBundle.putLong("from_amount", 0 - fromAmount);
+                    transactionBundle.putLong(Transaction.FROM_AMOUNT, 0 - fromAmount);
                 }
             }
 
@@ -391,21 +391,21 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
                 }
             }
 
-            transactionBundle.putString("note", values.get("note"));
+            transactionBundle.putString(Transaction.NOTE, values.get("note"));
 
             String originalFromCurrencyId = values.get("original_currency_id");
             if (originalFromCurrencyId != null && !originalFromCurrencyId.isEmpty() && !originalFromCurrencyId.equals("0")) {
-                transactionBundle.putString("original_currency", originalFromCurrencyId);
+                transactionBundle.putString(Transaction.ORIGINAL_CURRENCY, originalFromCurrencyId);
                 long originalFromAmount = Long.parseLong(values.get("original_from_amount"));
-                transactionBundle.putLong("original_amount", originalFromAmount);
+                transactionBundle.putLong(Transaction.ORIGINAL_AMOUNT, originalFromAmount);
             }
 
             long createdAt = Long.parseLong(values.get("datetime"));
-            transactionBundle.putLong("occurred_at", createdAt);
-            transactionBundle.putLong("cleared_at", createdAt);
+            transactionBundle.putLong(Transaction.OCCURRED_AT, createdAt);
+            transactionBundle.putLong(Transaction.CLEARED_AT, createdAt);
             long updatedAt = Long.parseLong(values.get("updated_on"));
             if (updatedAt > 1) {
-                transactionBundle.putLong("updated_at", updatedAt);
+                transactionBundle.putLong(Transaction.UPDATED_AT, updatedAt);
             }
 
             mTransactions.add(transactionBundle);
@@ -418,7 +418,7 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
         List<Bundle> childCategories = new ArrayList<>();
 
         for (Bundle currentCategoryBundle : mCategories) {
-            long id = currentCategoryBundle.getInt("id");
+            long id = currentCategoryBundle.getInt(Category.ID);
             if (id <= 0) {
                 continue;
             }
@@ -429,7 +429,7 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
             int level = 0;
 
             for(Bundle categoryBundle : mCategories) {
-                int currentId = categoryBundle.getInt("id");
+                int currentId = categoryBundle.getInt(Category.ID);
                 int currentLeft = categoryBundle.getInt("left");
                 int currentRight = categoryBundle.getInt("right");
 
@@ -445,7 +445,7 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
             }
 
             if (level >= 2) {
-                mMigrateCategories.put(currentCategoryBundle.getInt("id"), parentId);
+                mMigrateCategories.put(currentCategoryBundle.getInt(Category.ID), parentId);
             } else {
                 currentCategoryBundle.putInt("parent_id", parentId);
                 if (parentId == 0) {
@@ -460,8 +460,8 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
         Collections.sort(parentCategories, new Comparator<Bundle>() {
             @Override
             public int compare(Bundle category2, Bundle category1) {
-                String title2 = category2.getString("title");
-                String title1 = category1.getString("title");
+                String title2 = category2.getString(Category.NAME);
+                String title1 = category1.getString(Category.NAME);
 
                 if(title1 == null) {
                     if (title2 == null) {
@@ -482,9 +482,9 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
         realm.beginTransaction();
         for (Bundle values : parentCategories) {
 
-            int id = values.getInt("id");
+            int id = values.getInt(Category.ID);
             Category category = realm.createObject(Category.class, id);
-            category.setName(values.getString("name"));
+            category.setName(values.getString(Category.NAME));
         }
         realm.commitTransaction();
 
@@ -492,12 +492,12 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
         realm.beginTransaction();
         for (Bundle values : childCategories) {
 
-            Category category = realm.createObject(Category.class, values.getInt("id"));
-            category.setName(values.getString("name"));
+            Category category = realm.createObject(Category.class, values.getInt(Category.ID));
+            category.setName(values.getString(Category.NAME));
 
             int parentId = values.getInt("parent_id");
             if (parentId > 0) {
-                category.setParentCategory(realm.where(Category.class).equalTo("id", parentId).findFirst());
+                category.setParentCategory(realm.where(Category.class).equalTo(Category.ID, parentId).findFirst());
             }
         }
         realm.commitTransaction();
@@ -506,7 +506,7 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
     private void processAccountEntries() {
         realm.beginTransaction();
         for (Bundle accountBundle: mAccounts) {
-            String currencyId = accountBundle.getString("currency");
+            String currencyId = accountBundle.getString(Account.CURRENCY);
             String currencyCode;
             if (mCurrencies.containsKey(currencyId)) {
                 currencyCode = mCurrencies.get(currencyId);
@@ -514,19 +514,19 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
                 currencyCode = "EUR";
             }
 
-            Account account = realm.createObject(Account.class, accountBundle.getInt("id"));
+            Account account = realm.createObject(Account.class, accountBundle.getInt(Account.ID));
 
-            account.setTitle(accountBundle.getString("title"));
+            account.setTitle(accountBundle.getString(Account.TITLE));
             account.setCurrency(currencyCode);
-            account.setBalance(accountBundle.getLong("balance"));
-            account.setType(accountBundle.getString("type"));
-            account.setCardType(accountBundle.getString("card_type"));
-            account.setOnlineAccountType(accountBundle.getString("online_account_type"));
-            account.setActive(accountBundle.getBoolean("is_active"));
-            account.setIncludeIntoTotals(accountBundle.getBoolean("include_into_totals"));
-            account.setSortOrder(accountBundle.getInt("sort_order"));
-            account.setNote(accountBundle.getString("note"));
-            account.setCreatedAt(new Date(accountBundle.getLong("created_at")));
+            account.setBalance(accountBundle.getLong(Account.BALANCE));
+            account.setType(accountBundle.getString(Account.TYPE));
+            account.setCardType(accountBundle.getString(Account.CARD_TYPE));
+            account.setOnlineAccountType(accountBundle.getString(Account.ONLINE_ACCOUNT_TYPE));
+            account.setActive(accountBundle.getBoolean(Account.IS_ACTIVE));
+            account.setIncludeIntoTotals(accountBundle.getBoolean(Account.INCLUDE_INTO_TOTALS));
+            account.setSortOrder(accountBundle.getInt(Account.SORT_ORDER));
+            account.setNote(accountBundle.getString(Account.NOTE));
+            account.setCreatedAt(new Date(accountBundle.getLong(Account.CREATED_AT)));
         }
         realm.commitTransaction();
     }
@@ -535,15 +535,15 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
         realm.beginTransaction();
         for (Bundle payeeBundle: mPayees) {
 
-            Payee payee = realm.createObject(Payee.class, payeeBundle.getInt("id"));
-            payee.setName(payeeBundle.getString("name"));
+            Payee payee = realm.createObject(Payee.class, payeeBundle.getInt(Payee.ID));
+            payee.setName(payeeBundle.getString(Payee.NAME));
 
             int lastCategoryId = payeeBundle.getInt("last_category_id");
             if (lastCategoryId > 0) {
                 if (mMigrateCategories.indexOfKey(lastCategoryId) > 0) {
                     lastCategoryId = mMigrateCategories.get(lastCategoryId);
                 }
-                payee.setLastCategory(realm.where(Category.class).equalTo("id", lastCategoryId).findFirst());
+                payee.setLastCategory(realm.where(Category.class).equalTo(Category.ID, lastCategoryId).findFirst());
             }
         }
         realm.commitTransaction();
@@ -552,10 +552,10 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
     private void processProjectEntries() {
         realm.beginTransaction();
         for (Bundle projectValues: mProjects) {
-            Project project = realm.createObject(Project.class, projectValues.getInt("id"));
-            project.setTitle(projectValues.getString("title"));
-            project.setActive(projectValues.getBoolean("is_active"));
-            long updatedAt = projectValues.getLong("updated_at");
+            Project project = realm.createObject(Project.class, projectValues.getInt(Project.ID));
+            project.setTitle(projectValues.getString(Project.TITLE));
+            project.setActive(projectValues.getBoolean(Project.IS_ACTIVE));
+            long updatedAt = projectValues.getLong(Project.UPDATED_AT);
             if (updatedAt > 0) {
                 project.setUpdatedAt(new Date(updatedAt));
             }
@@ -568,20 +568,20 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
         realm.beginTransaction();
         for (Bundle values : mTransactions) {
 
-            int transactionId = values.getInt("id");
+            int transactionId = values.getInt(Transaction.ID);
 
             Transaction transaction = realm.createObject(Transaction.class, transactionId);
 
             int fromAccountId = values.getInt("from_account_id");
             if (fromAccountId > 0) {
-                transaction.setFromAccount(realm.where(Account.class).equalTo("id", fromAccountId).findFirst());
-                transaction.setFromAmount(values.getLong("from_amount"));
+                transaction.setFromAccount(realm.where(Account.class).equalTo(Account.ID, fromAccountId).findFirst());
+                transaction.setFromAmount(values.getLong(Transaction.FROM_AMOUNT));
             }
 
             int toAccountId = values.getInt("to_account_id");
             if (toAccountId > 0) {
-                transaction.setToAccount(realm.where(Account.class).equalTo("id", toAccountId).findFirst());
-                transaction.setToAmount(values.getLong("to_amount"));
+                transaction.setToAccount(realm.where(Account.class).equalTo(Account.ID, toAccountId).findFirst());
+                transaction.setToAmount(values.getLong(Transaction.TO_AMOUNT));
             }
 
             int categoryId = values.getInt("category_id");
@@ -589,37 +589,37 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
                 if (mMigrateCategories.indexOfKey(categoryId) > 0) {
                     categoryId = mMigrateCategories.get(categoryId);
                 }
-                transaction.setCategory(realm.where(Category.class).equalTo("id", categoryId).findFirst());
+                transaction.setCategory(realm.where(Category.class).equalTo(Category.ID, categoryId).findFirst());
             }
 
             int payeeId = values.getInt("payee_id");
             if (payeeId > 0) {
-                transaction.setPayee(realm.where(Payee.class).equalTo("id", payeeId).findFirst());
+                transaction.setPayee(realm.where(Payee.class).equalTo(Payee.ID, payeeId).findFirst());
             }
 
             int projectId = values.getInt("project_id");
             if (projectId > 0) {
-                transaction.setProject(realm.where(Project.class).equalTo("id", projectId).findFirst());
+                transaction.setProject(realm.where(Project.class).equalTo(Project.ID, projectId).findFirst());
             }
 
-            String originalCurrencyId = values.getString("original_currency");
+            String originalCurrencyId = values.getString(Transaction.ORIGINAL_CURRENCY);
             if (originalCurrencyId != null && !originalCurrencyId.isEmpty() && !originalCurrencyId.equals("0") && !originalCurrencyId.equals("-1")) {
                 String currencyCode;
                 if (mCurrencies.containsKey(originalCurrencyId)) {
                     currencyCode = mCurrencies.get(originalCurrencyId);
                     transaction.setOriginalCurrency(currencyCode);
-                    transaction.setOriginalAmount(values.getLong("original_amount"));
+                    transaction.setOriginalAmount(values.getLong(Transaction.ORIGINAL_AMOUNT));
                 } else {
                     Log.w(TAG, "skipping unknown original currency ID " + originalCurrencyId);
                 }
             }
 
-            transaction.setNote(values.getString("note"));
+            transaction.setNote(values.getString(Transaction.NOTE));
 
-            transaction.setOccurredAt(new Date(values.getLong("occurred_at")));
-            transaction.setClearedAt(new Date(values.getLong("cleared_at")));
+            transaction.setOccurredAt(new Date(values.getLong(Transaction.OCCURRED_AT)));
+            transaction.setClearedAt(new Date(values.getLong(Transaction.CLEARED_AT)));
 
-            long updatedAt = values.getLong("updated_at");
+            long updatedAt = values.getLong(Transaction.CLEARED_AT);
             if (updatedAt > 0) {
                 transaction.setUpdatedAt(new Date(updatedAt));
             }
@@ -632,23 +632,23 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
                 RealmList<TransactionSplit> splits = new RealmList<>();
                 for (Bundle split : transactionSplits) {
 
-                    TransactionSplit transactionSplit = realm.createObject(TransactionSplit.class, split.getInt("id"));
+                    TransactionSplit transactionSplit = realm.createObject(TransactionSplit.class, split.getInt(TransactionSplit.ID));
 
-                    long splitAmount = split.getLong("amount");
+                    long splitAmount = split.getLong(TransactionSplit.AMOUNT);
                     transactionSplit.setAmount(splitAmount);
                     transactionAmount += splitAmount;
 
                     int splitCategoryId = split.getInt("category_id");
                     if (splitCategoryId > 0) {
-                        transactionSplit.setCategory(realm.where(Category.class).equalTo("id", splitCategoryId).findFirst());
+                        transactionSplit.setCategory(realm.where(Category.class).equalTo(Category.ID, splitCategoryId).findFirst());
                     }
 
                     int splitProjectId = split.getInt("project_id");
                     if (splitProjectId > 0) {
-                        transactionSplit.setProject(realm.where(Project.class).equalTo("id", splitProjectId).findFirst());
+                        transactionSplit.setProject(realm.where(Project.class).equalTo(Project.ID, splitProjectId).findFirst());
                     }
 
-                    transactionSplit.setNote(split.getString("note"));
+                    transactionSplit.setNote(split.getString(TransactionSplit.NOTE));
 
                     splits.add(transactionSplit);
                 }
