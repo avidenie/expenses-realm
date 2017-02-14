@@ -40,10 +40,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_manage">Manage</string>
 
-    <!-- Action bar actions -->
-    <string name="action_financisto_import">Import from Financisto</string>
-
-    <!-- Buttons -->
+    <!-- Genearic buttons -->
     <string name="button_ok">OK</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_import">Import</string>
@@ -78,10 +75,6 @@
     <string name="online_account_google_wallet">Google Wallet</string>
     <string name="online_account_other">Other</string>
 
-    <!-- Empty listings -->
-    <string name="no_financisto_backup_found">Could not find any Financisto backups. Open Financisto, back up your database and try again.</string>
-    <string name="no_account_defined">You haven\'t created an account yet.</string>
-
     <!-- Backup/restore and import from Financisto -->
     <string name="read_storage_rationale_title">Access denied</string>
     <string name="read_storage_rationale"><![CDATA[You haven\'t allowed <b>%1$s</b> to access your files. Without access, <b>%2$s</b> cannot list backup files or create new backups.]]></string>
@@ -91,12 +84,29 @@
     <string name="financisto_import_confirmation_message">Your existing database will be removed and replaced with the contents of the Financisto backup file.</string>
     <string name="financisto_import_progress">Importing Financisto backup…</string>
     <string name="financisto_import_successful">The Financisto backup has been successfully imported.</string>
+    <string name="no_financisto_backup_found">Could not find any Financisto backups. Open Financisto, back up your database and try again.</string>
+    <string name="action_financisto_import">Import from Financisto</string>
 
+    <!-- Transactions -->
+    <string name="action_edit_transaction">Edit transaction</string>
+    <string name="action_delete_transaction">Delete transaction</string>
+    <string name="no_transactions_found">No transactions found.</string>
+    <string name="all_accounts">All accounts</string>
+    <string name="breadcrumbs">%1$s » %2$s</string>
+    <string name="multiple_categories">[Multiple categories …]</string>
+    <string name="default_transfer_description">Transfer</string>
+    <string name="default_debit_description">Debit</string>
+    <string name="default_credit_description">Credit</string>
+    <plurals name="selected_transactions">
+        <item quantity="one">1 selected</item>
+        <item quantity="other">%d selected</item>
+    </plurals>
 
     <!-- Single selection CAB -->
     <string name="selected_single_selection">1 selected</string>
 
     <!-- Manage accounts -->
+    <string name="no_account_defined">You haven\'t created an account yet.</string>
     <string name="action_edit_account">Edit Account</string>
     <string name="action_close_account">Close Account</string>
     <plurals name="selected_accounts">

@@ -27,12 +27,16 @@ public class Category extends RealmObject {
 
     public static final String ID = "id";
     public static final String NAME = "name";
+    public static final String COLOR = "color";
+    public static final String ICON = "icon";
     public static final String PARENT_CATEGORY = "parentCategory";
 
     @PrimaryKey
     private int id;
     @Required
     private String name;
+    private String color;
+    private String icon;
     private Category parentCategory;
 
     public int getId() {
@@ -49,6 +53,22 @@ public class Category extends RealmObject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Category getParentCategory() {

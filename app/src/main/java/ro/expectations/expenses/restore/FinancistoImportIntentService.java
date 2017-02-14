@@ -21,8 +21,10 @@ package ro.expectations.expenses.restore;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.util.ArrayMap;
+import android.support.v4.util.LongSparseArray;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
@@ -41,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.realm.RealmList;
+import ro.expectations.expenses.R;
 import ro.expectations.expenses.model.Account;
 import ro.expectations.expenses.model.AccountType;
 import ro.expectations.expenses.model.CardType;
@@ -50,6 +53,7 @@ import ro.expectations.expenses.model.Payee;
 import ro.expectations.expenses.model.Project;
 import ro.expectations.expenses.model.Transaction;
 import ro.expectations.expenses.model.TransactionSplit;
+import ro.expectations.expenses.utils.ColorUtils;
 
 public class FinancistoImportIntentService extends AbstractRestoreIntentService {
 
@@ -416,6 +420,10 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
 
         List<Bundle> parentCategories = new ArrayList<>();
         List<Bundle> childCategories = new ArrayList<>();
+        LongSparseArray<String> parentColors = new LongSparseArray<>();
+
+        String defaultColor = ColorUtils.toRGB(ContextCompat.getColor(this, R.color.colorPrimary));
+        String defaultIcon = "ic_question_mark_black_24dp";
 
         for (Bundle currentCategoryBundle : mCategories) {
             long id = currentCategoryBundle.getInt(Category.ID);
@@ -460,31 +468,44 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
         Collections.sort(parentCategories, new Comparator<Bundle>() {
             @Override
             public int compare(Bundle category2, Bundle category1) {
-                String title2 = category2.getString(Category.NAME);
-                String title1 = category1.getString(Category.NAME);
 
-                if(title1 == null) {
-                    if (title2 == null) {
+                String name2 = category2.getString(Category.NAME);
+                String name1 = category1.getString(Category.NAME);
+
+                if(name1 == null) {
+                    if (name2 == null) {
                         return 0; //equal
                     } else {
                         return -1; // null is before other strings
                     }
                 } else {
-                    if (title2 == null) {
+                    if (name2 == null) {
                         return 1;  // all other strings are after null
                     } else {
-                        return title2.compareTo(title1);
+                        return name2.compareTo(name1);
                     }
                 }
             }
         });
 
+        // process parent categories
+        int[] colors = getResources().getIntArray(R.array.colorPickerColors);
+        int colorIndex = 0;
         realm.beginTransaction();
         for (Bundle values : parentCategories) {
-
             int id = values.getInt(Category.ID);
+            String color = ColorUtils.toRGB(colors[colorIndex]);
+
             Category category = realm.createObject(Category.class, id);
             category.setName(values.getString(Category.NAME));
+            category.setColor(color);
+            category.setIcon(defaultIcon);
+
+            parentColors.put(id, color);
+            colorIndex++;
+            if (colorIndex == colors.length) {
+                colorIndex = 0;
+            }
         }
         realm.commitTransaction();
 
@@ -492,10 +513,18 @@ public class FinancistoImportIntentService extends AbstractRestoreIntentService 
         realm.beginTransaction();
         for (Bundle values : childCategories) {
 
+            int parentId = values.getInt("parent_id");
+
+            String color = parentColors.get(parentId);
+            if (color == null) {
+                color = defaultColor;
+            }
+
             Category category = realm.createObject(Category.class, values.getInt(Category.ID));
             category.setName(values.getString(Category.NAME));
+            category.setColor(color);
+            category.setIcon(defaultIcon);
 
-            int parentId = values.getInt("parent_id");
             if (parentId > 0) {
                 category.setParentCategory(realm.where(Category.class).equalTo(Category.ID, parentId).findFirst());
             }
