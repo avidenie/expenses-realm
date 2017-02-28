@@ -149,7 +149,6 @@ public class TransactionsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-
         mEmptyView = (TextView) view.findViewById(R.id.list_transactions_empty);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.list_transactions);
@@ -157,6 +156,22 @@ public class TransactionsFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.setHasFixedSize(true);
 
+        RealmResults<Transaction> transactions;
+        if (mSelectedAccountId > 0) {
+            transactions = mRealm.where(Transaction.class)
+                    .beginGroup()
+                    .equalTo(Transaction.FROM_ACCOUNT + "." + Account.ID, mSelectedAccountId)
+                    .or()
+                    .equalTo(Transaction.TO_ACCOUNT + "." + Account.ID, mSelectedAccountId)
+                    .endGroup()
+                    .findAllSortedAsync(Transaction.OCCURRED_AT, Sort.DESCENDING);
+        } else {
+            transactions = mRealm.where(Transaction.class)
+                    .findAllSortedAsync(Transaction.OCCURRED_AT, Sort.DESCENDING);
+        }
+
+        mAdapter = new TransactionsAdapter(getActivity(), transactions, mSelectedAccountId, true);
+        recyclerView.setAdapter(mAdapter);
 
         ItemClickHelper itemClickHelper = new ItemClickHelper(recyclerView);
         if (mHandleClicks) {
@@ -205,7 +220,6 @@ public class TransactionsFragment extends Fragment {
         }
     }
 
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         if (mHandleClicks && savedInstanceState != null) {
@@ -222,26 +236,5 @@ public class TransactionsFragment extends Fragment {
         if (mHandleClicks) {
             mAdapter.onSaveInstanceState(outState);
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        RealmResults<Transaction> transactions;
-        if (mSelectedAccountId > 0) {
-            transactions = mRealm.where(Transaction.class)
-                    .beginGroup()
-                    .equalTo(Transaction.FROM_ACCOUNT + "." + Account.ID, mSelectedAccountId)
-                    .or()
-                    .equalTo(Transaction.TO_ACCOUNT + "." + Account.ID, mSelectedAccountId)
-                    .endGroup()
-                    .findAllSortedAsync(Transaction.OCCURRED_AT, Sort.DESCENDING);
-        } else {
-            transactions = mRealm.where(Transaction.class)
-                    .findAllSortedAsync(Transaction.OCCURRED_AT, Sort.DESCENDING);
-        }
-        mAdapter = new TransactionsAdapter(getActivity(), transactions, mSelectedAccountId, true);
-        recyclerView.setAdapter(mAdapter);
     }
 }
