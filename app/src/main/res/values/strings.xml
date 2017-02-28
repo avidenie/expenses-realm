@@ -114,4 +114,13 @@
         <item quantity="other">%d selected</item>
     </plurals>
 
+    <!-- Manage payees -->
+    <string name="no_payees_found">No payees found</string>
+    <string name="action_edit_payee">Edit Payee</string>
+    <string name="action_delete_payee">Close Payee</string>
+    <plurals name="selected_payees">
+        <item quantity="one">1 selected</item>
+        <item quantity="other">%d selected</item>
+    </plurals>
+
 </resources>

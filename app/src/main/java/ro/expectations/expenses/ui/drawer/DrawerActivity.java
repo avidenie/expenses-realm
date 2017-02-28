@@ -37,6 +37,7 @@ import ro.expectations.expenses.R;
 import ro.expectations.expenses.ui.accounts.AccountsActivity;
 import ro.expectations.expenses.ui.backup.BackupActivity;
 import ro.expectations.expenses.ui.overview.OverviewActivity;
+import ro.expectations.expenses.ui.payees.PayeesActivity;
 import ro.expectations.expenses.ui.transactions.TransactionsActivity;
 
 public abstract class DrawerActivity extends AppCompatActivity
@@ -98,8 +99,10 @@ public abstract class DrawerActivity extends AppCompatActivity
             return true;
         } else if (id == R.id.nav_categories) {
             Toast.makeText(this, "Not yet implemented", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_payees) {
-            Toast.makeText(this, "Not yet implemented", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_payees && !(this instanceof AccountsActivity)) {
+            Intent payeesIntent = new Intent(this, PayeesActivity.class);
+            startActivityOnCloseDrawer(payeesIntent);
+            return true;
         } else if (id == R.id.nav_exchange_rates) {
             Toast.makeText(this, "Not yet implemented", Toast.LENGTH_SHORT).show();
         }

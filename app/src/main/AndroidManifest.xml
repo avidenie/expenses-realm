@@ -59,6 +59,14 @@
             android:label="@string/title_activity_financisto_import"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".ui.backup.BackupActivity" />
+        <activity
+            android:name=".ui.payees.PayeesActivity"
+            android:label="@string/title_activity_payees"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.payees.ManagePayeeActivity"
+            android:label="@string/title_activity_payees"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".restore.FinancistoImportIntentService"
